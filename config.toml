@@ -1,0 +1,14 @@
+[bot]
+default_color = 0xB50144
+
+
+[bot.channels]
+home_guild_id = 852600631994220585
+application_channel_id = 1106640846192914606
+console_id = 1106640846192914606
+application_archive_channel_id = 1106640846192914606
+
+[bot.roles]
+staff_role_id = 915679592231100426
+member_role_id = 915330052495933471
+applicant_role_id = 1084266132845904004
