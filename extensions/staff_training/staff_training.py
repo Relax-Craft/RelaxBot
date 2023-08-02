@@ -2,14 +2,14 @@ from nextcord.ext import commands
 from nextcord import Embed, Interaction, slash_command, Webhook, PermissionOverwrite
 import aiohttp
 
-import contextlib
+from main import RelaxSMP
 
 
 class Test(commands.Cog):
-    def __init__(self, bot) -> None:
+    def __init__(self, bot: RelaxSMP) -> None:
         super().__init__()
 
-        self.bot = bot
+        self.bot: RelaxSMP = bot
 
     def get_webhook(self):
         session = aiohttp.ClientSession()
@@ -41,5 +41,5 @@ class Test(commands.Cog):
         await session.close()
 
 
-def setup(bot):
+def setup(bot: RelaxSMP):
     bot.add_cog(Test(bot))

@@ -1,7 +1,7 @@
 from nextcord.ui import View, RoleSelect, button, Button
 from nextcord import Interaction, ButtonStyle
 
-from ..modal.modal import AnnouncementData
+from .modal import AnnouncementData
 
 class PingRoleSelect(View):
   def __init__(self, role):

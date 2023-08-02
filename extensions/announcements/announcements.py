@@ -1,13 +1,14 @@
 from nextcord import slash_command, Embed, Interaction, Permissions, TextInputStyle, ButtonStyle
 from nextcord.ext import commands
 
-from .modal.modal import AnnouncementData
-from .view.view import AnnouncementButtons
+from .announcement_ui.modal import AnnouncementData
+from .announcement_ui.view import AnnouncementButtons
+from main import RelaxSMP
 
 class Announcements(commands.Cog):
-  def __init__(self, bot):
+  def __init__(self, bot: RelaxSMP):
     super().__init__()
-    self.bot = bot
+    self.bot: RelaxSMP = bot
 
   @slash_command(name="announcement", default_member_permissions=Permissions(administrator=True))
   async def announcement(self, interaction: Interaction):
@@ -60,5 +61,5 @@ class Announcements(commands.Cog):
       await console.send("broadcast New Announcement just released! Go check it out :)")
 
 
-def setup(bot):
+def setup(bot: RelaxSMP):
   bot.add_cog(Announcements(bot))
