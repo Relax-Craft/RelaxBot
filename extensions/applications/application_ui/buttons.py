@@ -34,9 +34,6 @@ class ApplicationButton(View):
                 return
         
         questions = application_questions()
-        # with open(".\\extensions\\applications\\questions.json", "r") as file:
-        #     questions = json.load(file)
-
         applicant_role = interaction.guild.get_role(self.bot.applicant_role_id)
         await interaction.user.add_roles(applicant_role)
 
