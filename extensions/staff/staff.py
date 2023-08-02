@@ -47,8 +47,8 @@ class StaffCommands(commands.Cog):
 
     try:
       await user.send(
-        """Welcome to the server! You have just been accepted and should be whitelisted! :)
-`Server ip: 95.111.242.94:25565`""")
+        f"""Welcome to the server! You have just been accepted and should be whitelisted! :)
+`Server ip: {self.bot.server_ip}`""")
     except:
       pass
 

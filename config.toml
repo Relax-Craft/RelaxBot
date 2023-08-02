@@ -1,5 +1,6 @@
 [bot]
 default_color = 0xB50144
+server_ip = 95.111.242.94:25565
 
 
 [bot.channels]
