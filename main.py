@@ -67,7 +67,7 @@ class RelaxSMP(commands.Bot):
 
 
 if __name__ == "__main__":
-    with open(".\\config.toml", mode="rb") as fp:
+    with open("./config.toml", mode="rb") as fp:
         config = tomli.load(fp)
 
     relax_smp: RelaxSMP = RelaxSMP(config["bot"])
