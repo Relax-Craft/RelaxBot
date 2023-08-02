@@ -1,14 +1,14 @@
-import nextcord
 from nextcord import Embed, Interaction, slash_command, Message, SlashOption
 from nextcord.ext import commands
-# import json
-from utils.file_load import get_rules
 from difflib import get_close_matches
+
+from utils.file_load import get_rules
+from main import RelaxSMP
 
 
 class RulesCog(commands.Cog):
-  def __init__(self, bot):
-    self.bot = bot
+  def __init__(self, bot: RelaxSMP):
+    self.bot: RelaxSMP = bot
     self.colors = [0xF9CF95, 0x3EB489, 0xE5002D, 0xFF6EC7, 0xA1800B, 0x676D99]
 
 
@@ -136,6 +136,5 @@ of a rule change, you will be notifid accordingly.")
     await rules.edit(embeds=embeds)
 
 
-
-def setup(bot):
+def setup(bot: RelaxSMP):
   bot.add_cog(RulesCog(bot))
