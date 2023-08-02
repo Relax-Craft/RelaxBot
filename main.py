@@ -32,6 +32,10 @@ class RelaxSMP(commands.Bot):
         return self._config["default_color"]
 
     @property
+    def server_ip(self):
+        self._config["server_ip"]
+
+    @property
     def home_guild_id(self):
         return self._channel_ids["home_guild_id"]
 
