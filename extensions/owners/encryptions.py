@@ -2,7 +2,7 @@ from nextcord import slash_command, Interaction, SlashOption, Permissions
 from nextcord.ext import commands
 from main import RelaxSMP
 
-from ...utils.file_load import get_char_table, get_chars
+from utils.file_load import get_char_table, get_chars
 
 
 class Encryption(commands.Cog):
