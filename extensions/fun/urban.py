@@ -6,6 +6,7 @@ from main import RelaxSMP
 
 class UrbanDictionary(commands.Cog):
     def __init__(self, bot: RelaxSMP):
+        super().__init__()
         self.bot: RelaxSMP = bot
 
     @slash_command("urban")
@@ -36,4 +37,4 @@ class UrbanDictionary(commands.Cog):
 
 
 def setup(bot: RelaxSMP):
-    bot.add_cog(bot)
+    bot.add_cog(UrbanDictionary(bot))
