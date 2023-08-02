@@ -37,4 +37,4 @@ class UrbanDictionary(commands.Cog):
 
 
 def setup(bot: RelaxSMP):
-    bot.add_cog(bot)
+    bot.add_cog(UrbanDictionary(bot))
