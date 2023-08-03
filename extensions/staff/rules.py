@@ -46,6 +46,7 @@ class RulesCog(commands.Cog):
         value=f"```{rule_number}) {rule}```"
       )
       await interaction.channel.send(embed=warning)
+      await interaction.send("Warning Sent!", ephemeral=True)
       return
 
     chief_role = interaction.guild.get_role(989226771465535528)
