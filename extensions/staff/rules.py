@@ -38,7 +38,7 @@ class RulesCog(commands.Cog):
       rule = rule_book[rules_dict[0]][str(rule_number)]
 
       warning = Embed(
-        title="Looks like chat is getting a bit out of hand!",
+        title="Uh Oh! Looks like chat is getting a bit out of hand!",
         color=self.bot.default_color
       )
       warning.add_field(
