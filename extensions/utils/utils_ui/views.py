@@ -39,9 +39,11 @@ class InfoReactionRoles(View):
         await self.manage_role(interaction, role)
 
 
+
 class RoleSelect(StringSelect["RolesView"]):
-  def __init__(self, user):
+  def __init__(self, user, bot):
     self.user = user
+    self.bot = bot
 
     def has_role(user, role_id):
       for role in user.roles:
@@ -50,10 +52,10 @@ class RoleSelect(StringSelect["RolesView"]):
       return False
 
     self.roles = {
-      "announce": 1079431372109787147,
-      "news": 1089604637822291988,
-      "event": 1108164048148770937,
-      "bump": 997189428835524728
+      "announce": self.bot.announcement_role_id,
+      "news": self.bot.news_role_id,
+      "event": self.bot.event_role_id,
+      "bump": self.bot.bump_role_id
     }
 
     options = [
@@ -107,11 +109,11 @@ class RoleSelect(StringSelect["RolesView"]):
     else:
       message = f"Removed {str([str(role) for role in removed_roles])}"
 
-    await interaction.edit(content=message, view=RoleSelectView(self.user))
+    user = await interaction.guild.fetch_member(interaction.user.id)
+    await interaction.edit(content=message, view=RoleSelectView(user, self.bot))
 
 
 class RoleSelectView(View):
-
-  def __init__(self, user):
+  def __init__(self, user, bot):
     super().__init__()
-    self.add_item(RoleSelect(user))
+    self.add_item(RoleSelect(user, bot))
