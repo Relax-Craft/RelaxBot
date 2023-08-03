@@ -1,15 +1,19 @@
 [bot]
-default_color = 0xB50144
-server_ip = 95.111.242.94:25565
+default_color = 0x449092
+log_color = 0xB6528E
+server_ip = "95.111.242.94:25565"
 
 
 [bot.channels]
-home_guild_id = 852600631994220585
-application_channel_id = 1106640846192914606
-console_id = 1106640846192914606
-application_archive_channel_id = 1106640846192914606
+home_guild_id = 988160173870841957
+application_channel_id = 1051154864853491835
+log_channel_id = 1021177946033111060
+console_id = 989909436179025970
+application_archive_channel_id = 1030227466230435870
+game_chat_id = 990891473664884756
+announcement_channel_id = 989897524267601920
 
 [bot.roles]
-staff_role_id = 915679592231100426
-member_role_id = 915330052495933471
-applicant_role_id = 1084266132845904004
+staff_role_id = 989908468142075944
+member_role_id = 989228011343708170
+applicant_role_id = 1033176077524271214
