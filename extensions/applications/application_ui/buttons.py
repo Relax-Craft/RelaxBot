@@ -92,6 +92,7 @@ class ApplicationButton(View):
         namemc_button = Button(label="namemc", url=f"https://namemc.com/profile/{user_related_input.ign.value}")
         decision_buttons.add_item(namemc_button)
         application = await application_archive_channel.send(
+            content=interaction.user.mention,
             embed=proceed.embed,
             view=decision_buttons
         )
