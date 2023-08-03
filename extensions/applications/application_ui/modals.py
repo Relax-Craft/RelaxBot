@@ -19,7 +19,7 @@ class User_Related_Input(Modal):
                     placeholder=question[2],
                     style=TextInputStyle.short if question[1] == "short" else TextInputStyle.paragraph,
                     max_length=1000,
-                    default_value="GangstaMuffin",
+                    # default_value="GangstaMuffin",
                     required=True
                 )
             
@@ -58,7 +58,7 @@ class CommunityRelated(Modal):
                     placeholder=question[2],
                     style=TextInputStyle.short if question[1] == "short" else TextInputStyle.paragraph,
                     max_length=1000,
-                    default_value="GangstaMuffin",
+                    # default_value="GangstaMuffin",
                     required=True 
                 )
             
