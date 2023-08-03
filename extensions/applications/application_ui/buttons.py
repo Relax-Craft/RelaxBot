@@ -293,7 +293,8 @@ class DecideButtons(View):
         await self.applicant.remove_roles(applicant_role)
 
         for button in self.children:
-            button.disabled = True
+            if button.style != ButtonStyle.link:
+                button.disabled = True
 
         declined_info = Embed(
             title=f"Application Declined by {interaction.user.display_name}",

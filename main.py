@@ -3,6 +3,7 @@ from nextcord.ext import commands
 
 from utils.cog_load import load_cogs
 from  extensions.applications.application_ui.buttons import ApplicationButton, DecideButtons
+from extensions.utils.utils_ui.views import InfoReactionRoles
 
 import os
 from dotenv import load_dotenv
@@ -20,7 +21,7 @@ class RelaxSMP(commands.Bot):
         # intent.members = True
         
         super().__init__(
-            command_prefix = "-",
+            command_prefix = "rc!",
             intents = intent 
         )
 
@@ -66,6 +67,10 @@ class RelaxSMP(commands.Bot):
     @property
     def game_chat_id(self):
         return self._channel_ids["game_chat_id"]
+    
+    @property
+    def info_channel_id(self):
+        return self._channel_ids["info_channel_id"]
 
     @property
     def staff_role_id(self):
@@ -79,9 +84,26 @@ class RelaxSMP(commands.Bot):
     def applicant_role_id(self):
         return self._role_ids["applicant_role_id"]
     
+    @property
+    def bump_role_id(self):
+        return self._role_ids["bump_role_id"]
+    
+    @property
+    def announcement_role_id(self):
+        return self._role_ids["announcement_role_id"]
+
+    @property
+    def news_role_id(self):
+        return self._role_ids["news_role_id"]
+
+    @property
+    def event_role_id(self):
+        return self._role_ids["event_role_id"]
+
     async def on_ready(self):
         self.add_view(ApplicationButton(self))
         self.add_view(DecideButtons(self))
+        self.add_view(InfoReactionRoles(self))
 
         print("ready")
 

@@ -1,10 +1,47 @@
-from nextcord import Interaction, SelectOption
-from nextcord.ui import StringSelect, View
+from nextcord.ui import View, Button, button, StringSelect
+from nextcord import Interaction, ButtonStyle, Embed, Role, SelectOption
+
+
+class InfoReactionRoles(View):
+    def __init__(self, bot) -> None:
+        super().__init__(timeout=None)
+        self.bot = bot
+
+    async def manage_role(self, interaction: Interaction, role: Role):
+        if role not in interaction.user.roles:
+            await interaction.user.add_roles(role)
+            embed = Embed(description=f"Added the {role.mention} role!")
+        else:
+            await interaction.user.remove_roles(role)
+            embed = Embed(description=f"Removed the {role.mention} role!")
+        
+        await interaction.send(embed=embed, ephemeral=True)
+
+    
+    @button(emoji="<:Apple:1002823039240634368>", style=ButtonStyle.green, custom_id="persisten:bump_reaction_role")
+    async def bump_button(self, button: Button, interaction: Interaction):
+        role = interaction.guild.get_role(self.bot.bump_role_id)
+        await self.manage_role(interaction, role)
+
+    @button(emoji="📣", style=ButtonStyle.danger, custom_id="persisten:announcement_reaction_role")
+    async def announcements_button(self, button: Button, interaction: Interaction):
+        role = interaction.guild.get_role(self.bot.announcement_role_id)
+        await self.manage_role(interaction, role)
+    
+    @button(emoji="📰", style=ButtonStyle.blurple, custom_id="persisten:news_reaction_role")
+    async def news_button(self, button: Button, interaction: Interaction):
+        role = interaction.guild.get_role(self.bot.news_role_id)
+        await self.manage_role(interaction, role)
+    
+    @button(emoji="🎁", style=ButtonStyle.gray, custom_id="persisten:event_reaction_role")
+    async def event_button(self, button: Button, interaction: Interaction):
+        role = interaction.guild.get_role(self.bot.event_role_id)
+        await self.manage_role(interaction, role)
+
 
 class RoleSelect(StringSelect["RolesView"]):
-  def __init__(self, user, bot):
+  def __init__(self, user):
     self.user = user
-    self.bot = bot
 
     def has_role(user, role_id):
       for role in user.roles:
@@ -13,10 +50,10 @@ class RoleSelect(StringSelect["RolesView"]):
       return False
 
     self.roles = {
-      "announce": self.bot.announcement_role_id,
-      "news": self.bot.news_role_id,
-      "event": self.bot.event_role_id,
-      "bump": self.bot.bump_role_id
+      "announce": 1079431372109787147,
+      "news": 1089604637822291988,
+      "event": 1108164048148770937,
+      "bump": 997189428835524728
     }
 
     options = [
@@ -70,11 +107,11 @@ class RoleSelect(StringSelect["RolesView"]):
     else:
       message = f"Removed {str([str(role) for role in removed_roles])}"
 
-    user = await interaction.guild.fetch_member(interaction.user.id)
-    await interaction.edit(content=message, view=RoleSelectView(user, self.bot))
+    await interaction.edit(content=message, view=RoleSelectView(self.user))
 
 
 class RoleSelectView(View):
-  def __init__(self, user, bot):
+
+  def __init__(self, user):
     super().__init__()
-    self.add_item(RoleSelect(user, bot))
+    self.add_item(RoleSelect(user))

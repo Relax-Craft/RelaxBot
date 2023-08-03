@@ -11,7 +11,7 @@ class User_Related_Input(Modal):
         self.embed = None
         self.platform = platform
 
-        super().__init__(title="Application for RelaxSMP", timeout=15*60)
+        super().__init__(title="Application for RelaxSMP", timeout=12*60)
 
         for question_number, question in self.questions.items():
             text_input = TextInput(
@@ -48,7 +48,7 @@ class CommunityRelated(Modal):
         self.ign = None
         self.questions = questions
         self.embed = embed
-        super().__init__(title="Application for RelaxSMP", timeout=15*60)
+        super().__init__(title="Application for RelaxSMP", timeout=12*60)
 
         self.time_expired = False
 
