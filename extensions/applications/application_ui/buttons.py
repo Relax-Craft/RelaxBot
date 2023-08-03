@@ -86,8 +86,8 @@ class ApplicationButton(View):
         await application_message.edit(embed=proceed.embed)
         decision_buttons = DecideButtons(
             self.bot, 
-            user_related_input.ign.value,
-            interaction.user
+            in_game_name=user_related_input.ign.value,
+            applicant=interaction.user
         )
         namemc_button = Button(label="namemc", url=f"https://namemc.com/profile/{user_related_input.ign.value}")
         decision_buttons.add_item(namemc_button)
@@ -110,14 +110,14 @@ class ApplicationButton(View):
 
 
 class ContinueApplicationButtons(View):
-  def __init__(self, user, application, embed, questions):
-    super().__init__(timeout=10 * 60)
-    self.user = user
-    self.application = application
-    self.embed = embed
-    self.questions = questions
-    self.canceled = False
-    self.timed_out = False
+    def __init__(self, user, application, embed, questions):
+        super().__init__(timeout=10 * 60)
+        self.user = user
+        self.application = application
+        self.embed = embed
+        self.questions = questions
+        self.canceled = False
+        self.timed_out = False
 
     @button(label="Continue", style=ButtonStyle.success)
     async def next_questions(self, button: Button, interaction: Interaction):
@@ -148,12 +148,12 @@ class ContinueApplicationButtons(View):
 
 
 class DecideButtons(View):
-  def __init__(self, bot, in_game_name=None, applicant=None):
-    self.bot = bot
+    def __init__(self, bot, in_game_name=None, applicant=None):
+        self.bot = bot
 
-    self.ign = in_game_name
-    self.applicant: Member = applicant
-    super().__init__(timeout=None)
+        self.ign = in_game_name
+        self.applicant: Member = applicant
+        super().__init__(timeout=None)
 
     @button(label="Accept",
         style=ButtonStyle.success,
@@ -174,10 +174,14 @@ class DecideButtons(View):
 
         applicant_id = self.applicant.id if self.applicant != None else interaction.message.embeds[0].footer.text
 
-        home_guild = self.bot.get_guild(self.bot.home_guild_id)
-        self.applicant = home_guild.get_member(applicant_id)
+        if isinstance(applicant_id, str):
+            applicant_id = applicant_id.removeprefix("id: ")
 
-        if self.applicant == None:
+        home_guild = self.bot.get_guild(self.bot.home_guild_id)
+        # Get a new instance of the member object to check if they are still in the guild
+        try:
+            self.applicant = await home_guild.fetch_member(int(applicant_id))
+        except:
             await interaction.message.reply("User left the server!")
             await interaction.message.unpin(
                 reason="Application Handled - User left the server"
@@ -228,7 +232,7 @@ class DecideButtons(View):
         try:
             await self.applicant.send(
                 f"""Welcome to the server! You have just been accepted and should be whitelisted! :)
-                `Server ip: {self.bot.server_ip}`"""
+`Server ip: {self.bot.server_ip}`"""
             )
         except:
             pass
@@ -260,10 +264,14 @@ class DecideButtons(View):
 
         applicant_id = self.applicant.id if self.applicant != None else interaction.message.embeds[0].footer.text
 
-        home_guild = self.bot.get_guild(self.bot.home_guild_id)
-        self.applicant = home_guild.get_member(applicant_id)
+        if isinstance(applicant_id, str):
+            applicant_id = applicant_id.removeprefix("id: ")
 
-        if self.applicant == None:
+        home_guild = self.bot.get_guild(self.bot.home_guild_id)
+        # Get a new instance of the member object to check if they are still in the guild
+        try:
+            self.applicant = await home_guild.fetch_member(int(applicant_id))
+        except:
             await interaction.message.reply("User left the server!")
             await interaction.message.unpin(
                 reason="Application Handled - User left the server"
@@ -305,7 +313,7 @@ class DecideButtons(View):
         try:
             await self.applicant.send(
                 f"""Unfortunately your application was Declined 
-                `reason: {modal.reason.value}`"""
+`reason: {modal.reason.value}`"""
             )
         except:
             pass
