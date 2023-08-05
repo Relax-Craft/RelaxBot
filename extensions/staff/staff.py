@@ -73,10 +73,13 @@ class StaffCommands(commands.Cog):
 
     await member.kick()
 
-    log = Embed(title=f"{member.name} Kicked by {interaction.user.name}",
+    log = Embed(title=f"{member.name} Kicked",
                 color=self.bot.log_color)
-    log.add_field(name="Reason", value=reason)
-    log.set_thumbnail(interaction.user.avatar.url)
+    log.set_author(
+      name=interaction.user.name,
+      url=interaction.user.avatar.url
+    )
+    log.set_thumbnail(member.user.avatar.url)
     log.set_footer(text=member.id)
 
     log_channel = interaction.guild.get_channel(self.bot.log_channel_id)
@@ -103,10 +106,13 @@ class StaffCommands(commands.Cog):
 
     await member.ban()
 
-    log = Embed(title=f"{member.name} banned by {interaction.user.name}",
+    log = Embed(title=f"{member.name} Unbanned",
                 color=self.bot.log_color)
-    log.add_field(name="Reason", value=reason)
-    log.set_thumbnail(interaction.user.avatar.url)
+    log.set_author(
+      name=interaction.user.name,
+      url=interaction.user.avatar.url
+    )
+    log.set_thumbnail(member.user.avatar.url)
     log.set_footer(text=member.id)
 
     log_channel = interaction.guild.get_channel(self.bot.log_channel_id)
@@ -123,9 +129,13 @@ class StaffCommands(commands.Cog):
       await interaction.send("User isn't banned.", ephemeral=True)
       return
 
-    log = Embed(title=f"{member.name} Unbanned by {interaction.user.name}",
+    log = Embed(title=f"{member.name} Unbanned",
                 color=self.bot.log_color)
-    log.set_thumbnail(interaction.user.avatar.url)
+    log.set_author(
+      name=interaction.user.name,
+      url=interaction.user.avatar.url
+    )
+    log.set_thumbnail(member.user.avatar.url)
     log.set_footer(text=member.id)
 
     log_channel = interaction.guild.get_channel(self.bot.log_channel_id)
@@ -151,31 +161,27 @@ class StaffCommands(commands.Cog):
 
     await interaction.send(embed=warning)
 
-  # @slash_command(name="nuke", default_member_permissions=Permissions(administrator=True))
-  # async def slash_nuke(
-  #   self,
-  #   interaction: Interaction,
-  # ):
-  #   not_applied_role = interaction.guild.get_role(1101286162557050972)
-  #   users = [member for member in interaction.guild.members if not_applied_role in member.roles]
-  #   log_channel = interaction.guild.get_channel(self.bot.log_channel_id)
-
-  #   for user in users:
-  #     await user.kick()
-
-  #     log = Embed(title=f"{user.name} Kicked by {interaction.user.name}", color=self.bot.log_color)
-  #     log.add_field(name="Reason", value="Nuke")
-  #     log.set_thumbnail(interaction.user.avatar.url)
-  #     log.set_footer(text=user.id)
-
-  #     await log_channel.send(embed=log)
-
   @slash_command(name="clear",
                  default_member_permissions=Permissions(manage_messages=True))
   async def slash_clear(self, interaction: Interaction, amount: int):
     await interaction.response.defer(ephemeral=True)
     await interaction.channel.purge(limit=amount)
     await interaction.followup.send(f"Cleared {amount} messages!")
+
+  @slash_command(name="log", default_member_permissions=Permissions(manage_messages=True))
+  async def slash_log(self, interaction: Interaction, log: str):
+    log_channel = self.bot.get_channel(self.bot.log_channel_id)
+
+    log_embed = Embed(
+      title="New Log",
+      description=log,
+      color=self.bot.log_color
+    )
+    log_embed.set_author(name=interaction.user.name, url=interaction.user.avatar.url)
+
+    await log_channel.send(embed=log_embed)
+    await interaction.send("Log posted!", ephemeral=True)
+
 
 
 def setup(bot: RelaxSMP):

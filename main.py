@@ -1,8 +1,8 @@
 from nextcord import Intents
-from nextcord.ext import commands
+from nextcord.ext import commands, tasks
 
 from utils.cog_load import load_cogs
-from  extensions.applications.application_ui.buttons import ApplicationButton, DecideButtons
+from  extensions.applications.application_ui.view import ApplicationButton, DecideButtons
 from extensions.utils.utils_ui.views import InfoReactionRoles
 
 import os
@@ -15,6 +15,10 @@ class RelaxSMP(commands.Bot):
         self._channel_ids = config["channels"]
         self._role_ids = config["roles"]
         self._config = config
+
+        self._cog_link = None
+        self.cog_files = {}
+        self._is_live = False
 
         intent = Intents.default()
         intent.message_content = True
@@ -65,8 +69,8 @@ class RelaxSMP(commands.Bot):
         return self._channel_ids["game_chat_id"]
 
     @property
-    def game_chat_id(self):
-        return self._channel_ids["game_chat_id"]
+    def announcement_channel_id(self):
+        return self._channel_ids["announcement_channel_id"]
     
     @property
     def info_channel_id(self):
@@ -100,12 +104,50 @@ class RelaxSMP(commands.Bot):
     def event_role_id(self):
         return self._role_ids["event_role_id"]
 
+    def add_cog(self, cog: commands.Cog, *, override: bool = False) -> None:
+        self.cog_files[cog] = self._cog_link
+        super().add_cog(cog, override=override)
+
+    def load_extension(self, name, *, package=None, extras=None):
+        self._cog_link = name
+        super().load_extension(name, package=package)
+
+        if self._is_live:
+            self.task_sync_all_application_commands.start()
+
+    def unload_extension(self, name, *, package=None, reloading=False):
+        super().unload_extension(name, package=package)
+        deleted_cogs = []
+
+        for cog, link in self.cog_files.items():
+            if link == name:
+                deleted_cogs.append(cog)
+        
+        for cog in deleted_cogs:
+            del self.cog_files[cog]
+
+        if not reloading:
+            self.task_sync_all_application_commands.start()
+
+    def reload_extension(self, name, *, package=None):
+        self.unload_extension(name, package=package, reloading=True)
+        self.load_extension(name, package=package)
+        
+    @tasks.loop()
+    async def task_sync_all_application_commands(self):
+        await self.sync_all_application_commands()
+        self.task_sync_all_application_commands.stop()
+
     async def on_ready(self):
         self.add_view(ApplicationButton(self))
         self.add_view(DecideButtons(self))
         self.add_view(InfoReactionRoles(self))
 
+        self._is_live = True
         print("ready")
+
+    async def on_close(self):
+        self._is_live = False
 
 
 if __name__ == "__main__":
