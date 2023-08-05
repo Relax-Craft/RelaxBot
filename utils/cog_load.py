@@ -10,8 +10,9 @@ def load_cogs(bot):
             continue
 
         else:
+            print(x)
             for y in os.listdir(f"./extensions/{x}"):
                 if y.endswith(".py"):
                     bot.load_extension(f"extensions.{x}.{y[:-3]}")
-                    print(y)
-    print("")
+                    print(f"  {y}")
+        print("")

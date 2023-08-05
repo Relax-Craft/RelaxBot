@@ -2,7 +2,7 @@ from nextcord.ext import commands
 from nextcord import Interaction, Embed, Interaction, SlashOption
 from main import RelaxSMP
 import nextcord
-from .application_ui.buttons import ApplicationButton
+from .application_ui.view import ApplicationButton
 
 
 

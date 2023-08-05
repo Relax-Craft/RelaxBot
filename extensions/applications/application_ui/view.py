@@ -188,8 +188,9 @@ class DecideButtons(View):
             )
 
             for button in self.children:
-                button.disabled = True
-
+                if button.style != ButtonStyle.link:
+                    button.disabled = True
+                    
             await interaction.message.edit(view=self)
             return
 
@@ -205,7 +206,8 @@ class DecideButtons(View):
             )
 
         for button in self.children:
-            button.disabled = True
+            if button.style != ButtonStyle.link:
+                button.disabled = True
 
         accepted_info = Embed(
             title=f"Application Accepted by {interaction.user.display_name}",
@@ -278,7 +280,8 @@ class DecideButtons(View):
             )
 
             for button in self.children:
-                button.disabled = True
+                if button.style != ButtonStyle.link:
+                    button.disabled = True
 
             await interaction.message.edit(view=self)
             return
