@@ -77,7 +77,7 @@ class StaffCommands(commands.Cog):
                 color=self.bot.log_color)
     log.set_author(
       name=interaction.user.name,
-      url=interaction.user.avatar.url
+      icon_url=interaction.user.avatar.url
     )
     log.set_thumbnail(member.user.avatar.url)
     log.set_footer(text=member.id)
@@ -110,7 +110,7 @@ class StaffCommands(commands.Cog):
                 color=self.bot.log_color)
     log.set_author(
       name=interaction.user.name,
-      url=interaction.user.avatar.url
+      icon_url=interaction.user.avatar.url
     )
     log.set_thumbnail(member.user.avatar.url)
     log.set_footer(text=member.id)
@@ -133,7 +133,7 @@ class StaffCommands(commands.Cog):
                 color=self.bot.log_color)
     log.set_author(
       name=interaction.user.name,
-      url=interaction.user.avatar.url
+      icon_url=interaction.user.avatar.url
     )
     log.set_thumbnail(member.user.avatar.url)
     log.set_footer(text=member.id)
@@ -177,7 +177,7 @@ class StaffCommands(commands.Cog):
       description=log,
       color=self.bot.log_color
     )
-    log_embed.set_author(name=interaction.user.name, url=interaction.user.avatar.url)
+    log_embed.set_author(name=interaction.user.name, icon_url=interaction.user.avatar.url)
 
     await log_channel.send(embed=log_embed)
     await interaction.send("Log posted!", ephemeral=True)
