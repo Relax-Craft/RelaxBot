@@ -119,7 +119,7 @@ class ContinueApplicationButtons(View):
         self.canceled = False
         self.timed_out = False
 
-    @button(label="Continue", style=ButtonStyle.success)
+    @button(label="Next Questions", style=ButtonStyle.success)
     async def next_questions(self, button: Button, interaction: Interaction):
         community_related_input = CommunityRelated(self.questions, self.embed)
         await interaction.response.send_modal(community_related_input)
