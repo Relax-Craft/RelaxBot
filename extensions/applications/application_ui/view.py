@@ -10,20 +10,16 @@ class ApplicationButton(View):
         super().__init__(timeout=None)
         self.bot = bot
 
-    @button(label="Java",
+    @button(label="Apply",
               style=ButtonStyle.blurple,
-              custom_id="persistent_view:java")
+              custom_id="persistent_view:apply")
     async def application_button(self, button: Button, interaction: Interaction):
-        await self.application_process(interaction, "Java")
+        await self.application_process(interaction)
 
-  # @button(label="Bedrock",
-  #         style=ButtonStyle.blurple,
-  #         custom_id="persistent_view:bedrock")
-  # async def bedrock_application(self, button: Button,
-  #                               interaction: Interaction):
-  #   await self.application_process(interaction, "Bedrock")
-
-    async def application_process(self, interaction: Interaction, platform):
+    async def application_process(self, interaction: Interaction):
+        # CHANGE THIS TO A BUTTON QUESTION WHEN BEDROCK IS SUPPORTD
+        platform = "Java"
+        
         application_archive_channel = self.bot.get_channel(
             self.bot.application_archive_channel_id
         )
