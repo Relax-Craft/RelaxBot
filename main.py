@@ -2,8 +2,9 @@ from nextcord import Intents
 from nextcord.ext import commands, tasks
 
 from utils.cog_load import load_cogs
-from  extensions.applications.application_ui.view import ApplicationButton, DecideButtons
+from extensions.applications.application_ui.view import ApplicationButton, DecideButtons
 from extensions.utils.utils_ui.views import InfoReactionRoles
+from utils.error_handler.error_handler import ErrorHandler
 
 import os
 from dotenv import load_dotenv
@@ -29,8 +30,8 @@ class RelaxSMP(commands.Bot):
             intents = intent 
         )
 
+        ErrorHandler(self)
         load_cogs(self)
-
 
     @property
     def default_color(self):
