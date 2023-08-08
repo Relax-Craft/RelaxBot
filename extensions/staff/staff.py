@@ -75,11 +75,16 @@ class StaffCommands(commands.Cog):
 
     log = Embed(title=f"{member.name} Kicked",
                 color=self.bot.log_color)
-    log.set_author(
-      name=interaction.user.name,
-      icon_url=interaction.user.avatar.url
-    )
-    log.set_thumbnail(member.user.avatar.url)
+    if interaction.user.avatar.url:
+      log.set_author(
+        name=interaction.user.name,
+        icon_url=interaction.user.avatar.url
+      )
+      log.set_thumbnail(member.user.avatar.url)
+    else:
+      log.set_author(
+        name=interaction.user.name
+      )
     log.set_footer(text=member.id)
 
     log_channel = interaction.guild.get_channel(self.bot.log_channel_id)
@@ -108,11 +113,17 @@ class StaffCommands(commands.Cog):
 
     log = Embed(title=f"{member.name} Unbanned",
                 color=self.bot.log_color)
-    log.set_author(
-      name=interaction.user.name,
-      icon_url=interaction.user.avatar.url
-    )
-    log.set_thumbnail(member.user.avatar.url)
+    
+    if interaction.user.avatar.url:
+      log.set_author(
+        name=interaction.user.name,
+        icon_url=interaction.user.avatar.url
+      )
+      log.set_thumbnail(member.user.avatar.url)
+    else:
+      log.set_author(
+        name=interaction.user.name
+      )
     log.set_footer(text=member.id)
 
     log_channel = interaction.guild.get_channel(self.bot.log_channel_id)
@@ -131,11 +142,17 @@ class StaffCommands(commands.Cog):
 
     log = Embed(title=f"{member.name} Unbanned",
                 color=self.bot.log_color)
-    log.set_author(
-      name=interaction.user.name,
-      icon_url=interaction.user.avatar.url
-    )
-    log.set_thumbnail(member.user.avatar.url)
+    
+    if interaction.user.avatar.url:
+      log.set_author(
+        name=interaction.user.name,
+        icon_url=interaction.user.avatar.url
+      )
+      log.set_thumbnail(member.user.avatar.url)
+    else:
+      log.set_author(
+        name=interaction.user.name
+      )
     log.set_footer(text=member.id)
 
     log_channel = interaction.guild.get_channel(self.bot.log_channel_id)
@@ -156,8 +173,16 @@ class StaffCommands(commands.Cog):
       return
 
     warning = Embed(description=f"**Reason:** {reason}", color=0x2f3136)
-    warning.set_author(name=f"{user.name} has been warned",
-                       icon_url=user.avatar.url)
+    
+    if user.avatar.url:
+      warning.set_author(
+        name=f"{user.name} has been warned",
+        icon_url=user.avatar.url
+        )
+    else:
+      warning.set_author(
+        name=f"{user.name} has been warned"
+      )
 
     await interaction.send(embed=warning)
 
@@ -177,7 +202,13 @@ class StaffCommands(commands.Cog):
       description=log,
       color=self.bot.log_color
     )
-    log_embed.set_author(name=interaction.user.name, icon_url=interaction.user.avatar.url)
+
+    if interaction.user.avatar.url:
+      log_embed.set_author(name=interaction.user.name, icon_url=interaction.user.avatar.url)
+    else:
+      log_embed.set_author(
+        name=interaction.user.name
+      )
 
     await log_channel.send(embed=log_embed)
     await interaction.send("Log posted!", ephemeral=True)
