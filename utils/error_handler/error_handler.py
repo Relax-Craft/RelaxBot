@@ -23,11 +23,14 @@ class ErrorHandler:
         return Embed(title=f"__{cls[:parenthesis]}__", color=self.bot.log_color)
 
     async def on_error(self, method, *args, **kwargs):
+        print(f"Ignoring exception in {method}", file=stderr)
+        traceback = print_exc()
+        
         log = self.bot.get_channel(self.bot.log_channel_id)
         log_embed = Embed(title="__Error__", color=self.bot.log_color)
         log_embed.add_field(
             name="Traceback", 
-            value=f"```{print_exc()}```"
+            value=f"```{traceback}```"
         )
         await log.send(embed=log_embed)
 
@@ -35,9 +38,6 @@ class ErrorHandler:
 
         if ctx:
             await ctx[0].send("An error occured! Please contact an admin for Help")
-
-        print(f"Ignoring exception in {method}", file=stderr)
-        print_exc()
 
 
     async def on_command_error(self, ctx: commands.Context, error):
@@ -63,11 +63,16 @@ class ErrorHandler:
             await ctx.send(embed=embed)
             return
 
+        print(f"Ignoring exception in command {ctx.command}:", file=stderr)
+        traceback = print_exception(
+            type(error), error, error.__traceback__, file=stderr
+        )
+
         log = self.bot.get_channel(self.bot.log_channel_id)
         log_embed = self.embed(error)
         log_embed.add_field(
             name="Traceback", 
-            value=f"```{print_exc()}```"
+            value=f"```{traceback}```"
         )
         await log.send(embed=log_embed)
 
@@ -124,11 +129,6 @@ class ErrorHandler:
             return
 
         await ctx.send("An error occured! Please contact an admin for support!")
-
-        print(f"Ignoring exception in command {ctx.command}:", file=stderr)
-        print_exception(
-            type(error), error, error.__traceback__, file=stderr
-        )
         
 
     async def on_application_command_error(self, interaction: Interaction, error):
