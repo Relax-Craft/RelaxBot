@@ -74,6 +74,7 @@ class StaffCommands(commands.Cog):
     await member.kick()
 
     log = Embed(title=f"{member.name} Kicked",
+                description=reason,
                 color=self.bot.log_color)
     if interaction.user.avatar.url:
       log.set_author(
@@ -113,7 +114,8 @@ class StaffCommands(commands.Cog):
 
     await member.ban()
 
-    log = Embed(title=f"{member.name} Unbanned",
+    log = Embed(title=f"{member.name} Banned",
+                description=reason,
                 color=self.bot.log_color)
     
     if interaction.user.avatar.url:
