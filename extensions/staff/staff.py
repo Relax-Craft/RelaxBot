@@ -80,11 +80,13 @@ class StaffCommands(commands.Cog):
         name=interaction.user.name,
         icon_url=interaction.user.avatar.url
       )
-      log.set_thumbnail(member.user.avatar.url)
     else:
       log.set_author(
         name=interaction.user.name
       )
+    if member.avatar.url:
+      log.set_thumbnail(member.avatar.url)
+  
     log.set_footer(text=member.id)
 
     log_channel = interaction.guild.get_channel(self.bot.log_channel_id)
@@ -119,11 +121,10 @@ class StaffCommands(commands.Cog):
         name=interaction.user.name,
         icon_url=interaction.user.avatar.url
       )
-      log.set_thumbnail(member.user.avatar.url)
     else:
-      log.set_author(
-        name=interaction.user.name
-      )
+      log.set_author(name=interaction.user.name)
+    if member.avatar.url:
+      log.set_thumbnail(member.avatar.url)
     log.set_footer(text=member.id)
 
     log_channel = interaction.guild.get_channel(self.bot.log_channel_id)
@@ -148,11 +149,12 @@ class StaffCommands(commands.Cog):
         name=interaction.user.name,
         icon_url=interaction.user.avatar.url
       )
-      log.set_thumbnail(member.user.avatar.url)
     else:
       log.set_author(
         name=interaction.user.name
       )
+    if member.avatar.url:
+      log.set_thumbnail(member.avatar.url)
     log.set_footer(text=member.id)
 
     log_channel = interaction.guild.get_channel(self.bot.log_channel_id)
