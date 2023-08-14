@@ -76,7 +76,7 @@ class StaffCommands(commands.Cog):
     log = Embed(title=f"{member.name} Kicked",
                 description=reason,
                 color=self.bot.log_color)
-    if interaction.user.avatar.url:
+    if interaction.user.avatar:
       log.set_author(
         name=interaction.user.name,
         icon_url=interaction.user.avatar.url
@@ -85,7 +85,7 @@ class StaffCommands(commands.Cog):
       log.set_author(
         name=interaction.user.name
       )
-    if member.avatar.url:
+    if member.avatar:
       log.set_thumbnail(member.avatar.url)
   
     log.set_footer(text=member.id)
@@ -118,14 +118,14 @@ class StaffCommands(commands.Cog):
                 description=reason,
                 color=self.bot.log_color)
     
-    if interaction.user.avatar.url:
+    if interaction.user.avatar:
       log.set_author(
         name=interaction.user.name,
         icon_url=interaction.user.avatar.url
       )
     else:
       log.set_author(name=interaction.user.name)
-    if member.avatar.url:
+    if member.avatar:
       log.set_thumbnail(member.avatar.url)
     log.set_footer(text=member.id)
 
@@ -146,7 +146,7 @@ class StaffCommands(commands.Cog):
     log = Embed(title=f"{member.name} Unbanned",
                 color=self.bot.log_color)
     
-    if interaction.user.avatar.url:
+    if interaction.user.avatar:
       log.set_author(
         name=interaction.user.name,
         icon_url=interaction.user.avatar.url
@@ -155,7 +155,7 @@ class StaffCommands(commands.Cog):
       log.set_author(
         name=interaction.user.name
       )
-    if member.avatar.url:
+    if member.avatar:
       log.set_thumbnail(member.avatar.url)
     log.set_footer(text=member.id)
 
@@ -178,7 +178,7 @@ class StaffCommands(commands.Cog):
 
     warning = Embed(description=f"**Reason:** {reason}", color=0x2f3136)
     
-    if user.avatar.url:
+    if user.avatar:
       warning.set_author(
         name=f"{user.name} has been warned",
         icon_url=user.avatar.url
@@ -207,7 +207,7 @@ class StaffCommands(commands.Cog):
       color=self.bot.log_color
     )
 
-    if interaction.user.avatar.url:
+    if interaction.user.avatar:
       log_embed.set_author(name=interaction.user.name, icon_url=interaction.user.avatar.url)
     else:
       log_embed.set_author(

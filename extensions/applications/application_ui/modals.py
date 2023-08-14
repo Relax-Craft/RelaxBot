@@ -32,7 +32,7 @@ class User_Related_Input(Modal):
 
     async def callback(self, interaction: Interaction):
         user_related_embed = Embed(title=f"{self.platform} | {interaction.user.display_name}", color=self.bot.default_color)
-        if interaction.user.avatar.url:
+        if interaction.user.avatar:
             user_related_embed.set_thumbnail(url=interaction.user.avatar.url)
         user_related_embed.set_footer(text=f"id: {interaction.user.id}")
         
