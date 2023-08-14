@@ -2,7 +2,7 @@ from nextcord import Interaction, Embed
 from nextcord.ext import commands
 
 import difflib
-from traceback import format_exception, print_exception, print_exc
+from traceback import format_exception, print_exception, print_exc, format_tb
 from sys import exc_info, stderr
 from cooldowns import CallableOnCooldown
 
@@ -139,13 +139,14 @@ class ErrorHandler:
 
     async def on_application_command_error(self, interaction: Interaction, error):
         exception = exc_info()
-        traceback = "".join(format_exception(exception[1]))
+        tb = "".join(format_tb(exception[2]))
+        error = f"```py\n{tb}{type(exception[1]).__name__}: {exception[1]}\n```"
         
         log = self.bot.get_channel(self.bot.log_channel_id)
         log_embed = self.embed(error)
         log_embed.add_field(
             name="Traceback", 
-            value=f"```{traceback}```"
+            value=f"```{error}```"
         )
         await log.send(embed=log_embed)
         
