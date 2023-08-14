@@ -37,7 +37,7 @@ class ErrorHandler:
         log_embed = Embed(title="__Error__", color=self.bot.log_color)
         log_embed.add_field(
             name="Traceback", 
-            value=f"```{self.traceback_maker(exception)}```"
+            value=self.traceback_maker(exception)
         )
         await log.send(embed=log_embed)
 
@@ -81,7 +81,7 @@ class ErrorHandler:
         log_embed = self.embed(error)
         log_embed.add_field(
             name="Traceback", 
-            value=f"```{self.traceback_maker(exception)}```"
+            value=self.traceback_maker(exception)
         )
         await log.send(embed=log_embed)
 
@@ -147,7 +147,7 @@ class ErrorHandler:
         log_embed = self.embed(error)
         log_embed.add_field(
             name="Traceback", 
-            value=f"```{self.traceback_maker(exception)}```"
+            value=self.traceback_maker(exception)
         )
         await log.send(embed=log_embed)
         
