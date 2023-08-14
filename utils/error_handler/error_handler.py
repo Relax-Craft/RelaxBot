@@ -22,18 +22,22 @@ class ErrorHandler:
         parenthesis = cls.index("(")
         return Embed(title=f"__{cls[:parenthesis]}__", color=self.bot.log_color)
 
+    def traceback_maker(self, exception) -> str:
+        """ A way to debug your code anywhere """
+        tb = "".join(format_tb(exception[2]))
+        return f"```py\n{tb}{type(exception[1]).__name__}: {exception[1]}\n```"
+
     async def on_error(self, method, *args, **kwargs):
         print(f"Ignoring exception in {method}", file=stderr)
         print_exc()
         
         exception = exc_info()
-        traceback = "".join(format_exception(exception[1]))
 
         log = self.bot.get_channel(self.bot.log_channel_id)
         log_embed = Embed(title="__Error__", color=self.bot.log_color)
         log_embed.add_field(
             name="Traceback", 
-            value=f"```{traceback}```"
+            value=f"```{self.traceback_maker(exception)}```"
         )
         await log.send(embed=log_embed)
 
@@ -72,13 +76,12 @@ class ErrorHandler:
         )
 
         exception = exc_info()
-        traceback = "".join(format_exception(exception[1]))
 
         log = self.bot.get_channel(self.bot.log_channel_id)
         log_embed = self.embed(error)
         log_embed.add_field(
             name="Traceback", 
-            value=f"```{traceback}```"
+            value=f"```{self.traceback_maker(exception)}```"
         )
         await log.send(embed=log_embed)
 
@@ -139,14 +142,12 @@ class ErrorHandler:
 
     async def on_application_command_error(self, interaction: Interaction, error):
         exception = exc_info()
-        tb = "".join(format_tb(exception[2]))
-        error = f"```py\n{tb}{type(exception[1]).__name__}: {exception[1]}\n```"
         
         log = self.bot.get_channel(self.bot.log_channel_id)
         log_embed = self.embed(error)
         log_embed.add_field(
             name="Traceback", 
-            value=f"```{error}```"
+            value=f"```{self.traceback_maker(exception)}```"
         )
         await log.send(embed=log_embed)
         
