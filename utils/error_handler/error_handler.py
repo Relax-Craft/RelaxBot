@@ -27,7 +27,7 @@ class ErrorHandler:
         print_exc()
         
         exception = exc_info()
-        traceback = "".join(traceback.format_exception(exception))
+        traceback = "".join(format_exception(exception))
 
         log = self.bot.get_channel(self.bot.log_channel_id)
         log_embed = Embed(title="__Error__", color=self.bot.log_color)
@@ -72,7 +72,7 @@ class ErrorHandler:
         )
 
         exception = exc_info()
-        traceback = "".join(traceback.format_exception(exception))
+        traceback = "".join(format_exception(exception))
 
         log = self.bot.get_channel(self.bot.log_channel_id)
         log_embed = self.embed(error)
@@ -139,7 +139,7 @@ class ErrorHandler:
 
     async def on_application_command_error(self, interaction: Interaction, error):
         exception = exc_info()
-        traceback = "".join(traceback.format_exception(exception))
+        traceback = "".join(format_exception(exception))
         
         log = self.bot.get_channel(self.bot.log_channel_id)
         log_embed = self.embed(error)
