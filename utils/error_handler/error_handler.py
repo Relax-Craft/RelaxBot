@@ -2,7 +2,7 @@ from nextcord import Interaction, Embed
 from nextcord.ext import commands
 
 import difflib
-from traceback import format_exc, print_exception, print_exc
+from traceback import format_exception, print_exception, print_exc
 from sys import exc_info, stderr
 from cooldowns import CallableOnCooldown
 
@@ -24,8 +24,11 @@ class ErrorHandler:
 
     async def on_error(self, method, *args, **kwargs):
         print(f"Ignoring exception in {method}", file=stderr)
-        traceback = print_exc()
+        print_exc()
         
+        exception = exc_info()
+        traceback = "".join(traceback.format_exception(exception))
+
         log = self.bot.get_channel(self.bot.log_channel_id)
         log_embed = Embed(title="__Error__", color=self.bot.log_color)
         log_embed.add_field(
@@ -64,9 +67,12 @@ class ErrorHandler:
             return
 
         print(f"Ignoring exception in command {ctx.command}:", file=stderr)
-        traceback = print_exception(
+        print_exception(
             type(error), error, error.__traceback__, file=stderr
         )
+
+        exception = exc_info()
+        traceback = "".join(traceback.format_exception(exception))
 
         log = self.bot.get_channel(self.bot.log_channel_id)
         log_embed = self.embed(error)
@@ -132,11 +138,14 @@ class ErrorHandler:
         
 
     async def on_application_command_error(self, interaction: Interaction, error):
+        exception = exc_info()
+        traceback = "".join(traceback.format_exception(exception))
+        
         log = self.bot.get_channel(self.bot.log_channel_id)
         log_embed = self.embed(error)
         log_embed.add_field(
             name="Traceback", 
-            value=f"```{print_exc()}```"
+            value=f"```{traceback}```"
         )
         await log.send(embed=log_embed)
         
