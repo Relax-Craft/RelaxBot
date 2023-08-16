@@ -24,7 +24,7 @@ class ErrorHandler:
 
     def traceback_maker(self, exception) -> str:
         """ A way to debug your code anywhere """
-        return "".join(format_exception(exception[1]))
+        return f"```{''.join(format_exception(exception[1]))}```"
         # return f"```py\n{tb}{type(exception[1]).__name__}: {exception[1]}\n```"
 
     async def on_error(self, method, *args, **kwargs):
