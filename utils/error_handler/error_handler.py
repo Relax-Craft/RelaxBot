@@ -25,7 +25,7 @@ class ErrorHandler:
     def traceback_maker(self, exception) -> str:
         """ A way to debug your code anywhere """
         tb = "```py\n"
-        tb += ("".join(format_exception(exception[1]))).replace("```", "\`\`\`")
+        tb += ("".join(format_exception(exception))).replace("```", "\`\`\`")
         tb += "```"
         return tb
     
@@ -39,7 +39,7 @@ class ErrorHandler:
         log_embed = Embed(title="__Error__", color=self.bot.log_color)
         log_embed.add_field(
             name="Traceback", 
-            value=self.traceback_maker(exception)
+            value=self.traceback_maker(exception[1])
         )
         await log.send(embed=log_embed)
 
