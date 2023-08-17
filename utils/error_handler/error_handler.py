@@ -24,8 +24,9 @@ class ErrorHandler:
 
     def traceback_maker(self, exception) -> str:
         """ A way to debug your code anywhere """
-        return f"```{''.join(format_exception(exception))}```"
-        # return f"```py\n{tb}{type(exception[1]).__name__}: {exception[1]}\n```"
+        tb = ''.join(format_exception(exception[1]))
+        tb.replace("```", "\`\`\`")
+        return f"```{tb}```"
 
     async def on_error(self, method, *args, **kwargs):
         print(f"Ignoring exception in {method}", file=stderr)
@@ -37,7 +38,7 @@ class ErrorHandler:
         log_embed = Embed(title="__Error__", color=self.bot.log_color)
         log_embed.add_field(
             name="Traceback", 
-            value=self.traceback_maker(exception[1])
+            value=self.traceback_maker(exception)
         )
         await log.send(embed=log_embed)
 
