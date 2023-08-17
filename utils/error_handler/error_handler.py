@@ -24,10 +24,11 @@ class ErrorHandler:
 
     def traceback_maker(self, exception) -> str:
         """ A way to debug your code anywhere """
-        tb = ''.join(format_exception(exception[1]))
-        tb.replace("```", "\`\`\`")
-        return f"```{tb}```"
-
+        tb = "```py\n"
+        tb += ("".join(format_exception(exception[1]))).replace("```", "\`\`\`")
+        tb += "```"
+        return tb
+    
     async def on_error(self, method, *args, **kwargs):
         print(f"Ignoring exception in {method}", file=stderr)
         print_exc()
