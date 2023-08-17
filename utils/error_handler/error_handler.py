@@ -75,13 +75,11 @@ class ErrorHandler:
             type(error), error, error.__traceback__, file=stderr
         )
 
-        exception = exc_info()
-
         log = self.bot.get_channel(self.bot.log_channel_id)
         log_embed = self.embed(error)
         log_embed.add_field(
             name="Traceback", 
-            value=self.traceback_maker(exception)
+            value=self.traceback_maker(error)
         )
         await log.send(embed=log_embed)
 
@@ -141,13 +139,11 @@ class ErrorHandler:
         
 
     async def on_application_command_error(self, interaction: Interaction, error):
-        exception = exc_info()
-        
         log = self.bot.get_channel(self.bot.log_channel_id)
         log_embed = self.embed(error)
         log_embed.add_field(
             name="Traceback", 
-            value=self.traceback_maker(exception)
+            value=self.traceback_maker(error)
         )
         await log.send(embed=log_embed)
         
