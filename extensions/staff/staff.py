@@ -112,7 +112,7 @@ class StaffCommands(commands.Cog):
       await interaction.send(user_check)
       return
 
-    await member.ban()
+    await member.ban(delete_message_days=0, delete_message_seconds=0)
 
     log = Embed(title=f"{member.name} Banned",
                 description=reason,
