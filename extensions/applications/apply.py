@@ -70,7 +70,7 @@ Application format is in the pins :)")
         application_archive_channel = self.bot.get_channel(self.bot.application_archive_channel_id)
         
         async for message in application_archive_channel.history(limit=100):
-            if len(message.embeds) > 0:
+            if len(message.embeds) > 0 and message.author.bot:
                 if str(applicant.id) in message.embeds[0].footer.text:
                     view = nextcord.ui.View()
                     view.add_item(nextcord.ui.Button(label="Application", url=message.jump_url))
